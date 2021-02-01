@@ -1,0 +1,6 @@
+name: SurvivalTools
+version: ${project.version}
+author: Vexatone
+
+main: com.vexatone.survivaltools.survivaltools.SurvivalTools
+api-version: 1.16
