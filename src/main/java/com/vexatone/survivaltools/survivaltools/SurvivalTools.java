@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.Objects;
 
 /**
@@ -20,8 +21,23 @@ public final class SurvivalTools extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // Config
+        File file = new File(getDataFolder() + File.separator + "config.yml");
+
+        if (file.exists()) {
+            CheckConfig();
+            saveConfig();
+            reloadConfig();
+        } else {
+            // Adds default config path
+            getConfig().addDefault("isActivated", true);
+
+            getConfig().options().copyDefaults(true);
+            saveConfig();
+        }
+
         // Event Listener Register
-        getServer().getPluginManager().registerEvents(new EventPlayerDeath(), this);
+        getServer().getPluginManager().registerEvents(new EventPlayerDeath(this), this);
 
         // Command Register
         Objects.requireNonNull(this.getCommand("pl")).setExecutor(new CMDpl(this));
@@ -34,5 +50,23 @@ public final class SurvivalTools extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
         console.sendMessage(ChatColor.RED + "Plugin Disabled!");
+    }
+
+    public void CheckConfig() {
+        if(getConfig().get("isActivated") == null) {
+            getConfig().set("isActivated", true);
+            saveConfig();
+            reloadConfig();
+        }
+    }
+
+    public boolean activatedState() {
+        return getConfig().getBoolean("isActivated");
+    }
+
+    public void activatedUpdate(boolean newState) {
+        getConfig().set("isActivated", newState);
+        saveConfig();
+        reloadConfig();
     }
 }

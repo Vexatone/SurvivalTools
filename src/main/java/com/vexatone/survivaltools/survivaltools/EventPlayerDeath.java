@@ -14,6 +14,11 @@ import org.bukkit.event.entity.PlayerDeathEvent;
  * @since   2021-02-01
  */
 public class EventPlayerDeath implements Listener {
+    private final SurvivalTools plugin;
+
+    EventPlayerDeath(SurvivalTools plugin) {
+        this.plugin = plugin;
+    }
 
     /**
      * <b>EventHandler</b> This handler executes when someone dies.
@@ -22,8 +27,10 @@ public class EventPlayerDeath implements Listener {
      */
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent death) {
-        death.setKeepInventory(false);
-        death.setKeepLevel(false);
-        death.setDeathMessage(ChatColor.DARK_RED + "A player died during the survival.");
+        if (plugin.activatedState()) {
+            death.setKeepInventory(false);
+            death.setKeepLevel(false);
+            death.setDeathMessage(ChatColor.DARK_RED + "A player died during the survival.");
+        }
     }
 }
