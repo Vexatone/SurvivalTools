@@ -6,6 +6,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
+
 /**
  * The Survival Tools Plugin prepares a Minecraft survival environment.
  *
@@ -21,7 +23,11 @@ public final class SurvivalTools extends JavaPlugin {
         // Event Listener Register
         getServer().getPluginManager().registerEvents(new EventPlayerDeath(), this);
 
+        // Command Register
+        Objects.requireNonNull(this.getCommand("pl")).setExecutor(new CMDpl(this));
+
         console.sendMessage(ChatColor.BLUE + "Setup Complete!");
+
     }
 
     @Override

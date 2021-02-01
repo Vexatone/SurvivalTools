@@ -24,6 +24,6 @@ public class EventPlayerDeath implements Listener {
     public void onPlayerDeath(PlayerDeathEvent death) {
         death.setKeepInventory(false);
         death.setKeepLevel(false);
-        death.setDeathMessage(ChatColor.DARK_RED + "A player died while playing.");
+        death.setDeathMessage(ChatColor.DARK_RED + "A player died during the survival.");
     }
 }
